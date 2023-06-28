@@ -1,5 +1,5 @@
 import LikeDislike from "./LikeDislike";
-import PlatformIcon, { Platform } from "./PlatformIcon";
+import PlatformIcon, { type Platform } from "./PlatformIcon";
 
 export type Streamer = {
   _id: string;
@@ -16,6 +16,7 @@ const StreamerCard = ({ streamer }: { streamer: Streamer }) => {
 
   return (
     <div className="rounded-lg border-2 border-gray-300 p-4 hover:border-[#8578E6]">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="rounded-lg object-contain" src={imageUrl} alt="Image" />
 
       <div className="flex flex-col p-4">

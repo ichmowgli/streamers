@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { useState } from "react";
 import axios from "axios";
 import { BiDislike, BiLike } from "react-icons/bi";
 
@@ -42,7 +43,7 @@ const LikeDislike = ({
     <div className="flex flex-row gap-5 pt-4">
       <div className="flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition ">
         <p>{likeCount}</p>
-        <button onClick={handleLike}>
+        <button onClick={() => handleLike()}>
           <BiLike
             className="transition duration-300 ease-in-out hover:fill-[#8578E6]"
             size={25}
@@ -51,7 +52,7 @@ const LikeDislike = ({
       </div>
       <div className="flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition">
         <p>{dislikeCount}</p>
-        <button onClick={handleDislike}>
+        <button onClick={() => handleDislike()}>
           <BiDislike
             className="transition duration-300 ease-in-out hover:fill-red-500"
             size={25}
