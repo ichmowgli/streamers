@@ -15,7 +15,7 @@ const StreamerCard = ({ streamer }: { streamer: Streamer }) => {
   const { imageUrl, name, platform, description, like, dislike } = streamer;
 
   return (
-    <div className="rounded-lg border-2 border-gray-300 p-4 hover:border-[#8578E6]">
+    <div className="rounded-lg border-2 border-gray-300 p-4 hover:border-[#8578E6] mx-auto max-w-xs">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="rounded-lg object-contain" src={imageUrl} alt="Image" />
 
