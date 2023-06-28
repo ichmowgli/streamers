@@ -21,7 +21,10 @@ export class Streamer {
   platform: Platform;
 
   @Prop({ default: 0, required: true })
-  score: number;
+  like: number;
+
+  @Prop({ default: 0, required: true })
+  dislike: number;
 
   @Prop()
   imageUrl?: string;

@@ -1,9 +1,15 @@
-import { type Config } from "tailwindcss";
+import { Config } from "tailwindcss";
 
-export default {
+const tailwindConfig: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'rubik': ['Rubik', 'sans-serif']
+      },
+    },
   },
   plugins: [],
-} satisfies Config;
+};
+
+export default tailwindConfig;
