@@ -46,7 +46,7 @@ const AddStreamerForm = () => {
           <input
             type="text"
             id="username"
-            className="h-8 rounded-md bg-[#252525] p-2 text-start focus:outline-none focus:ring-2 focus:ring-[#8578E6]"
+            className="h-8 rounded-md bg-[#252525] p-2 text-start shadow focus:outline-none focus:ring-2 focus:ring-[#8578E6]"
             placeholder="Enter username"
             required
           />
@@ -94,10 +94,10 @@ const AddStreamerForm = () => {
           className="flex w-full flex-col gap-2 text-sm"
           htmlFor="description"
         >
-          <span className="text-start ">Description</span>
+          <span className="text-start">Description</span>
           <textarea
             id="description"
-            className="min-h-2/5 h-min resize-none rounded-md border-none bg-[#252525] p-2 text-start focus:border focus:outline-none focus:ring-2 focus:ring-[#8578E6] "
+            className="min-h-2/5 h-min resize-none rounded-md border-none bg-[#252525] p-2 text-start shadow focus:border focus:outline-none focus:ring-2 focus:ring-[#8578E6] "
             placeholder="Enter description"
             required
             rows={5}
@@ -108,13 +108,13 @@ const AddStreamerForm = () => {
       <div className="flex flex-row gap-2">
         <button
           type="submit"
-          className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#252525] p-2 hover:bg-[#777777]"
+          className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#252525] p-2 shadow hover:bg-[#777777]"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#8578E6] p-2 hover:bg-[#665DAC]"
+          className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#8578E6] p-2 shadow hover:bg-[#665DAC]"
         >
           Add
         </button>
