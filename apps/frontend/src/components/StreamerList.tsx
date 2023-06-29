@@ -1,22 +1,16 @@
-"use client";
+import React, { useEffect, useState } from "react";
+import StreamerCard from "../components/StreamerCard";
+import { type Streamer, fetchStreamers } from "~/services/requests";
 
-import React, { type FC, useEffect, useState } from "react";
-import StreamerCard, { type Streamer } from "../components/StreamerCard";
-
-interface StreamerListProps {
-  streamers: Streamer[];
-}
-
-const StreamerList: FC<StreamerListProps> = () => {
+const StreamerList = () => {
   const [streamers, setStreamers] = useState<Streamer[]>();
 
   useEffect(() => {
     const fetchStreamerData = async () => {
       setStreamers([]);
       try {
-        const response = await fetch("http://localhost:3001/streamer/");
-        const data = (await response.json()) as Streamer[];
-        setStreamers(data);
+        const streamers = await fetchStreamers();
+        setStreamers(streamers);
       } catch (error) {
         console.error("Error fetching streamer data:", error);
       }

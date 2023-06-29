@@ -1,10 +1,7 @@
-import React, { type FC } from "react";
+import React from "react";
 import { BsPlus } from "react-icons/bs";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface AddStreamerButtonProps {}
-
-const AddStreamerButton: FC<AddStreamerButtonProps> = ({}) => {
+const AddStreamerButton = () => {
   return (
     <>
       <div className="flex flex-row items-center justify-end gap-3">

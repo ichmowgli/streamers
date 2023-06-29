@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useState } from "react";
-import axios from "axios";
 import { BiDislike, BiLike } from "react-icons/bi";
+import {
+  DISLIKED_STREAMERS,
+  LIKED_STREAMERS,
+  placeVote,
+} from "~/services/requests";
+import { cn } from "~/services/utils";
 
 const LikeDislike = ({
   id,
@@ -14,14 +19,15 @@ const LikeDislike = ({
 }) => {
   const [likeCount, setLikeCount] = useState(like);
   const [dislikeCount, setDislikeCount] = useState(dislike);
+  const [disabled, setDisabled] = useState(false);
 
   const handleLike = async () => {
     try {
-      setLikeCount(likeCount + 1);
-      console.log({ id });
-      await axios.put(`http://localhost:3001/streamer/${id}/vote`, {
-        direction: "UP",
-      });
+      const { ok } = await placeVote(id, "UP");
+      if (ok) {
+        setLikeCount(likeCount + 1);
+        setDisabled(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -29,34 +35,45 @@ const LikeDislike = ({
 
   const handleDislike = async () => {
     try {
-      setDislikeCount(dislikeCount + 1);
-
-      await axios.put(`http://localhost:3001/streamer/${id}/vote`, {
-        direction: "DOWN",
-      });
+      const { ok } = await placeVote(id, "DOWN");
+      if (ok) {
+        setDislikeCount(dislikeCount + 1);
+        setDisabled(true);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const likeColor = LIKED_STREAMERS.has(id)
+    ? "text-[#665dac]"
+    : "hover:text-[#665dac]";
+  const dislikeColor = DISLIKED_STREAMERS.has(id)
+    ? "text-red-500 text-red-500"
+    : "hover:text-red-500 focus:text-red-500";
+
   return (
-    <div className="flex flex-row gap-5 pt-4">
-      <div className="flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition ">
+    <div className="mt-4 flex flex-row gap-5">
+      <div
+        className={cn(
+          "flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition duration-300 ease-in-out",
+          likeColor
+        )}
+      >
         <p>{likeCount}</p>
-        <button onClick={() => handleLike()}>
-          <BiLike
-            className="transition duration-300 ease-in-out hover:fill-[#8578E6]"
-            size={25}
-          />
+        <button onClick={() => handleLike()} disabled={disabled}>
+          <BiLike size={25} />
         </button>
       </div>
-      <div className="flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition">
+      <div
+        className={cn(
+          "flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition  duration-300 ease-in-out",
+          dislikeColor
+        )}
+      >
         <p>{dislikeCount}</p>
-        <button onClick={() => handleDislike()}>
-          <BiDislike
-            className="transition duration-300 ease-in-out hover:fill-red-500"
-            size={25}
-          />
+        <button onClick={() => handleDislike()} disabled={disabled}>
+          <BiDislike size={25} />
         </button>
       </div>
     </div>

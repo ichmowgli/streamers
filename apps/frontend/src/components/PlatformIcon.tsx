@@ -2,10 +2,7 @@ import React, { type FC } from "react";
 import { BsTwitch, BsYoutube } from "react-icons/bs";
 import { RiKickLine } from "react-icons/ri";
 import { BiLogoTiktok } from "react-icons/bi";
-
-export type Platform = "TWITCH" | "YOUTUBE" | "KICK" | "RUMBLE" | "TIKTOK";
-
-type PlatformIconProps = { platform: Platform };
+import { type Platform } from "~/services/requests";
 
 export const RumbleIcon = ({
   fill = "grayscale",
@@ -26,6 +23,7 @@ export const RumbleIcon = ({
   );
 };
 
+type PlatformIconProps = { platform: Platform };
 const PlatformIcon: FC<PlatformIconProps> = ({ platform }) => {
   switch (platform) {
     case "TWITCH":
