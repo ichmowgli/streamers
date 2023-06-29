@@ -1,4 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { cn } from "~/services/utils";
 
 export enum Platform {
@@ -8,6 +11,7 @@ export enum Platform {
   RUMBLE = "RUMBLE",
   TIKTOK = "TIKTOK",
 }
+
 type PlatformOption = {
   id: string;
   name: string;
@@ -18,38 +22,67 @@ const platforms: PlatformOption[] = Object.keys(Platform).map((key) => ({
   name: key,
 }));
 
-const CheckboxOption = ({ id, name }: PlatformOption) => (
+const schema = z.object({
+  username: z.string().min(1, "Username is required"),
+  description: z.string().min(1, "Description is required"),
+  ...Object.fromEntries(platforms.map(({ id }) => [id, z.boolean()])),
+});
+
+const CheckboxOption = ({ control, name }: { control: any; name: string }) => (
   <li>
-    <div className="flex items-center rounded p-2 hover:bg-[#777777]">
-      <input type="checkbox" id={id} className="h-4 w-4 rounded" />
-      <label htmlFor={id} className="ml-2 w-full rounded">
-        {name}
-      </label>
-    </div>
+    <label className="flex items-center rounded p-2 hover:bg-[#777777]">
+      <Controller
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <input {...field} type="checkbox" className="h-4 w-4 rounded" />
+        )}
+      />
+      <span className="ml-2 w-full rounded">{name}</span>
+    </label>
   </li>
 );
 
 const AddStreamerForm = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+  const [dropdownOpen, setDropdownOpen] = React.useState(false);
+
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+  const onSubmit = (data: any) => console.log(data);
 
   return (
     <div className="z-2000 mx-auto flex w-full max-w-2xl flex-col gap-8 rounded-xl bg-[#222222] p-8 text-[#f5f5f5]">
       <h2 className="text-lg font-semibold">New Streamer</h2>
 
-      <form className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <label
           className="flex w-full flex-col gap-2 text-sm"
           htmlFor="username"
         >
           <span>Username</span>
-          <input
-            type="text"
-            id="username"
-            className="h-8 rounded-md bg-[#252525] p-2 text-start shadow focus:outline-none focus:ring-2 focus:ring-[#8578E6]"
-            placeholder="Enter username"
-            required
+          <Controller
+            control={control}
+            name="username"
+            render={({ field }) => (
+              <input
+                {...field}
+                type="text"
+                className="h-8 rounded-md bg-[#252525] p-2 text-start shadow focus:outline-none focus:ring-2 focus:ring-[#8578E6]"
+                placeholder="Enter username"
+                required
+              />
+            )}
           />
+          {errors.username && typeof errors.username.message === "string" && (
+            <p>{errors.username.message}</p>
+          )}
         </label>
 
         <div className="w-content flex flex-col gap-2 rounded-lg bg-[#252525] text-sm shadow">
@@ -84,7 +117,7 @@ const AddStreamerForm = () => {
           <div className={`z-2000 ${dropdownOpen ? "block" : "hidden"} w-full`}>
             <ul className="space-y-1 p-3 text-sm ">
               {platforms.map(({ id, name }) => (
-                <CheckboxOption key={id} id={id} name={name} />
+                <CheckboxOption key={id} control={control} name={id} />
               ))}
             </ul>
           </div>
@@ -95,30 +128,41 @@ const AddStreamerForm = () => {
           htmlFor="description"
         >
           <span className="text-start">Description</span>
-          <textarea
-            id="description"
-            className="min-h-2/5 h-min resize-none rounded-md border-none bg-[#252525] p-2 text-start shadow focus:border focus:outline-none focus:ring-2 focus:ring-[#8578E6] "
-            placeholder="Enter description"
-            required
-            rows={5}
+          <Controller
+            control={control}
+            name="description"
+            render={({ field }) => (
+              <textarea
+                {...field}
+                className="min-h-2/5 h-min resize-none rounded-md border-none bg-[#252525] p-2 text-start shadow focus:border focus:outline-none focus:ring-2 focus:ring-[#8578E6]"
+                placeholder="Enter description"
+                required
+                rows={5}
+              />
+            )}
           />
+          {errors.description &&
+            typeof errors.description.message === "string" && (
+              <p>{errors.description.message}</p>
+            )}
         </label>
-      </form>
 
-      <div className="flex flex-row gap-2">
-        <button
-          type="submit"
-          className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#252525] p-2 shadow hover:bg-[#777777]"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#8578E6] p-2 shadow hover:bg-[#665DAC]"
-        >
-          Add
-        </button>
-      </div>
+        <div className="flex flex-row gap-2">
+          <button
+            type="button"
+            className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#252525] p-2 shadow hover:bg-[#777777]"
+            onClick={() => {}}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#8578E6] p-2 shadow hover:bg-[#665DAC]"
+          >
+            Add
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
