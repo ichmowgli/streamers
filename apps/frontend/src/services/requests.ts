@@ -54,21 +54,20 @@ export const placeVote = async (
   return { ok: true };
 };
 
-
 export const createStreamer = async (streamer: {
-  name: string,
-  description: string,
-  platforms: Platform[],
+  name: string;
+  description: string;
+  platforms: Platform[];
 }): Promise<Streamer> => {
   const response = await fetch(`${API_URL}/streamers`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(streamer)
+    body: JSON.stringify(streamer),
   });
 
-  console.log('Server response:', response);
+  console.log("Server response:", response);
 
   if (!response.ok) {
     const message = `An error has occurred: ${response.status}`;
@@ -76,4 +75,4 @@ export const createStreamer = async (streamer: {
   }
 
   return response.json();
-}
+};
