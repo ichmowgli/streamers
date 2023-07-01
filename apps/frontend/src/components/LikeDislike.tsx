@@ -45,19 +45,15 @@ const LikeDislike = ({
     }
   };
 
-  const likeColor = LIKED_STREAMERS.has(id)
-    ? "text-[#665dac]"
-    : "hover:text-[#665dac]";
-  const dislikeColor = DISLIKED_STREAMERS.has(id)
-    ? "text-red-500 text-red-500"
-    : "hover:text-red-500 focus:text-red-500";
-
   return (
     <div className="mt-4 flex flex-row gap-5">
       <div
         className={cn(
           "flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition duration-300 ease-in-out",
-          likeColor
+          {
+            "text-[#665dac]": LIKED_STREAMERS.has(id),
+            "hover:text-[#665dac]": !LIKED_STREAMERS.has(id),
+          }
         )}
       >
         <p>{likeCount}</p>
@@ -68,7 +64,10 @@ const LikeDislike = ({
       <div
         className={cn(
           "flex cursor-pointer flex-row items-center gap-2 text-neutral-500 transition  duration-300 ease-in-out",
-          dislikeColor
+          {
+            "text-red-500": DISLIKED_STREAMERS.has(id),
+            "hover:text-red-500": DISLIKED_STREAMERS.has(id),
+          }
         )}
       >
         <p>{dislikeCount}</p>

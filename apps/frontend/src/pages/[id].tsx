@@ -60,7 +60,7 @@ const streamerPage: NextPage = () => {
                   </div>
                   <p className="">{streamer.description}</p>
                 </div>
-                <LikeDislike id={streamer._id} like={0} dislike={0} />
+                <LikeDislike id={streamer._id} like={streamer.like} dislike={streamer.dislike} />
               </div>
             </div>
           </div>
