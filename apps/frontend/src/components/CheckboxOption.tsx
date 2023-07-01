@@ -14,7 +14,7 @@ const CheckboxOption = ({
         <input
           {...register(`platforms`)}
           type="checkbox"
-          className="h-4 w-4 rounded"
+          className="h-4 w-4 rounded accent-[#8578E6]"
           value={name}
         />
 

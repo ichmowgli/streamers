@@ -1,28 +1,31 @@
+/* eslint-disable @next/next/no-img-element */
 import { type Streamer } from "~/services/requests";
 import LikeDislike from "./LikeDislike";
 import PlatformIcon from "./PlatformIcon";
+import Link from "next/link";
 
 const StreamerCard = ({ streamer }: { streamer: Streamer }) => {
-  const { imageUrl, name, platforms, description, like, dislike } = streamer;
+  const { imageUrl, name, platforms, like, dislike } = streamer;
 
   return (
-    <div className="mx-auto max-w-xs rounded-lg border-2 border-gray-300 p-4 hover:border-[#8578E6]">
+    <div className="mx-auto max-w-xs rounded-lg border bg-[#f5f5f5] p-4 text-[#222126] hover:border-4 hover:border-[#8578E6]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="rounded-lg object-contain" src={imageUrl} alt="Image" />
+      <Link href={`/${streamer._id}`}>
+        <img className="rounded-lg object-contain" src={imageUrl} alt="Image" />
+      </Link>
 
-      <div className="flex flex-col p-4">
-        {/* TODO: refer to the profile page */}
-        <a href="#">
-          <h3 className="text-xl font-semibold">{name}</h3>
-        </a>
+      <div className="flex flex-col gap-2 p-4">
+        <Link href={`/${streamer._id}`}>
+          <h3 className="text-xl font-semibold hover:text-[#8578E6]">{name}</h3>
+        </Link>
+
         {/* TODO: refer to platform link (example: https://{platform.link}/streamer.name) */}
-        <a className="flex flex-row gap-1">
+        <a className="flex flex-row gap-2 text-[#8578E6]">
           {platforms.map((platform) => (
             // eslint-disable-next-line react/jsx-key
             <PlatformIcon platform={platform} />
           ))}
         </a>
-        <p className="pt-3 text-sm text-neutral-600">{description}</p>
         <LikeDislike like={like} dislike={dislike} id={streamer._id} />
       </div>
     </div>

@@ -9,7 +9,7 @@ export const RumbleIcon = ({
 }: {
   fill: "color" | "grayscale";
 }) => {
-  const color = fill === "grayscale" ? "#000000" : "#85C742";
+  const color = fill === "grayscale" ? "#8578E6" : "#85C742";
 
   return (
     <svg width="21" height="21" fill="none" xmlns="http://www.w3.org/2000/svg">

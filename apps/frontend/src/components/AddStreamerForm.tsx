@@ -10,8 +10,8 @@ import CheckboxOption from "./CheckboxOption";
 const platforms = Object.keys(Platform) as Platform[];
 
 const schema = z.object({
-  name: z.string().min(1, "Username is required"),
-  description: z.string().min(1, "Description is required"),
+  name: z.string().trim().min(1, "Username is required"),
+  description: z.string().trim().min(10, "Description is required"),
   platforms: z
     .array(
       z.enum([
