@@ -1,4 +1,5 @@
 import React from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -25,6 +26,7 @@ const platforms: PlatformOption[] = Object.keys(Platform).map((key) => ({
 const schema = z.object({
   username: z.string().min(1, "Username is required"),
   description: z.string().min(1, "Description is required"),
+  platform: z.enum(["TWITCH", "YOUTUBE", "KICK", "RUMBLE", "TIKTOK"]),
   ...Object.fromEntries(platforms.map(({ id }) => [id, z.boolean()])),
 });
 
@@ -45,7 +47,6 @@ const CheckboxOption = ({ control, name }: { control: any; name: string }) => (
 
 const AddStreamerForm = () => {
   const {
-    handleSubmit,
     control,
     formState: { errors },
   } = useForm({
@@ -55,13 +56,19 @@ const AddStreamerForm = () => {
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  const onSubmit = (data: any) => console.log(data);
-
   return (
     <div className="z-2000 mx-auto flex w-full max-w-2xl flex-col gap-8 rounded-xl bg-[#222222] p-8 text-[#f5f5f5]">
-      <h2 className="text-lg font-semibold">New Streamer</h2>
+      <div>
+        <Dialog.Title className="text-lg font-semibold">
+          New Streamer
+        </Dialog.Title>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+        <Dialog.Description className="mt-2 text-sm leading-normal text-gray-400">
+          Add new streamer here. Click add when you are done.
+        </Dialog.Description>
+      </div>
+
+      <form className="flex flex-col gap-5">
         <label
           className="flex w-full flex-col gap-2 text-sm"
           htmlFor="username"
@@ -148,13 +155,14 @@ const AddStreamerForm = () => {
         </label>
 
         <div className="flex flex-row gap-2">
-          <button
-            type="button"
-            className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#252525] p-2 shadow hover:bg-[#777777]"
-            onClick={() => {}}
-          >
-            Cancel
-          </button>
+          <Dialog.Close className="w-full">
+            <button
+              type="button"
+              className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#252525] p-2 shadow hover:bg-[#777777]"
+            >
+              Cancel
+            </button>
+          </Dialog.Close>
           <button
             type="submit"
             className="w-full cursor-pointer items-center justify-center rounded-lg bg-[#8578E6] p-2 shadow hover:bg-[#665DAC]"

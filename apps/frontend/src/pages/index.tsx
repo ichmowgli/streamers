@@ -1,6 +1,5 @@
 import Head from "next/head";
 import AddStreamerButton from "~/components/AddStreamerButton";
-import AddStreamerForm from "~/components/AddStreamerForm";
 import StreamerList from "~/components/StreamerList";
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
         <div className="container mx-auto p-8 font-rubik">
           <AddStreamerButton />
           <StreamerList />
-          <AddStreamerForm />
         </div>
       </main>
     </>

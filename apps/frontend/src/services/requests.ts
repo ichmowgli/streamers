@@ -1,3 +1,5 @@
+// /* eslint-disable @typescript-eslint/restrict-template-expressions */
+// /* eslint-disable @typescript-eslint/no-unsafe-return */
 export type Platform = "TWITCH" | "YOUTUBE" | "KICK" | "RUMBLE" | "TIKTOK";
 
 export type Streamer = {
