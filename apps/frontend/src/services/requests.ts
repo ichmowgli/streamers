@@ -1,18 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 // /* eslint-disable @typescript-eslint/restrict-template-expressions */
 // /* eslint-disable @typescript-eslint/no-unsafe-return */
-export type Platform = "TWITCH" | "YOUTUBE" | "KICK" | "RUMBLE" | "TIKTOK";
 
+export enum Platform {
+  TWITCH = "TWITCH",
+  YOUTUBE = "YOUTUBE",
+  KICK = "KICK",
+  RUMBLE = "RUMBLE",
+  TIKTOK = "TIKTOK",
+}
 export type Streamer = {
   _id: string;
   imageUrl: string;
   name: string;
-  platform: Platform;
+  platforms: Platform[];
   description: string;
   like: number;
   dislike: number;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 export const LIKED_STREAMERS = new Set<string>();
 export const DISLIKED_STREAMERS = new Set<string>();
@@ -45,3 +53,27 @@ export const placeVote = async (
 
   return { ok: true };
 };
+
+
+export const createStreamer = async (streamer: {
+  name: string,
+  description: string,
+  platforms: Platform[],
+}): Promise<Streamer> => {
+  const response = await fetch(`${API_URL}/streamers`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(streamer)
+  });
+
+  console.log('Server response:', response);
+
+  if (!response.ok) {
+    const message = `An error has occurred: ${response.status}`;
+    throw new Error(message);
+  }
+
+  return response.json();
+}

@@ -18,7 +18,7 @@ export class Streamer {
   description: string;
 
   @Prop({ required: true })
-  platform: Platform;
+  platforms: Platform[];
 
   @Prop({ default: 0, required: true })
   like: number;

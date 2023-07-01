@@ -9,8 +9,8 @@ export class CreateStreamerDto {
   @IsString()
   description: string;
 
-  @IsEnum(Platform)
-  platform: Platform;
+  @IsEnum(Platform, { each: true })
+  platforms: Platform[];
 
   @IsString()
   imageUrl: string = env.DEFAULT_IMAGE_URL;
