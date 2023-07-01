@@ -11,7 +11,11 @@ const platforms = Object.keys(Platform) as Platform[];
 
 const schema = z.object({
   name: z.string().trim().min(1, "Username is required"),
-  description: z.string().trim().min(10, "Description is required"),
+  description: z
+    .string()
+    .trim()
+    .min(1, "Description is required")
+    .min(10, "Description should be at least 10 characters"),
   platforms: z
     .array(
       z.enum([
@@ -25,7 +29,7 @@ const schema = z.object({
     .min(1),
 });
 
-const AddStreamerForm = () => {
+const AddStreamerForm = ({ closeDialog }: { closeDialog: () => void }) => {
   const {
     formState: { errors },
     handleSubmit,
@@ -42,6 +46,7 @@ const AddStreamerForm = () => {
     try {
       const newStreamer = await createStreamer(data);
       console.log("Successfully created new streamer:", newStreamer);
+      setTimeout(() => closeDialog(), 100);
     } catch (err) {
       console.error("Failed to create new streamer:", err);
     }
