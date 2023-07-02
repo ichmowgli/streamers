@@ -12,6 +12,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   useEffect(() => {
     connectToWs();
     return () => disconnectFromWs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
