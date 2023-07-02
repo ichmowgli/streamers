@@ -4,13 +4,7 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { useStreamerStore } from "~/services/store";
 import { cn } from "~/services/utils";
 
-const LikeDislike = ({
-  id,
-}: {
-  id: string;
-  like: number;
-  dislike: number;
-}) => {
+const LikeDislike = ({ id }: { id: string; like: number; dislike: number }) => {
   const [disabled, setDisabled] = useState(false);
 
   const { placeVote, reactions, streamers } = useStreamerStore();

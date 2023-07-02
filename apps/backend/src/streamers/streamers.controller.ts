@@ -27,7 +27,7 @@ export class StreamersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log({ id })
+    console.log({ id });
     return this.streamersService.findOne(id);
   }
 

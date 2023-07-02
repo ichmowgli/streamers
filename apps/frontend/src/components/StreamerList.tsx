@@ -7,7 +7,7 @@ const StreamerList = () => {
 
   useEffect(() => {
     void fetchStreamers();
-  }, [fetchStreamers])
+  }, [fetchStreamers]);
 
   const arr = streamerArr();
 
