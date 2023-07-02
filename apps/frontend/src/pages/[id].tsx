@@ -13,8 +13,7 @@ const StreamerPage: NextPage = () => {
   const { query } = useRouter();
   const streamerId = query.id as string;
 
-  const { streamers, fetchStreamer, connectToWs } =
-    useStreamerStore();
+  const { streamers, fetchStreamer, connectToWs } = useStreamerStore();
 
   connectToWs();
 
