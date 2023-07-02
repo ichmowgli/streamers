@@ -15,7 +15,7 @@ const StreamerList = () => {
     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-8">
       {arr.length
         ? arr.map((item) => <StreamerCard key={item._id} streamer={item} />)
-        : "none"}
+        : "No streamers"}
     </div>
   );
 };
