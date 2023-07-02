@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { cn } from "~/services/utils";
-import { Platform, createStreamer } from "~/services/requests";
 import CheckboxOption from "./CheckboxOption";
+import { Platform, useStreamerStore } from "~/services/store";
 
 const platforms = Object.keys(Platform) as Platform[];
 
@@ -40,6 +40,8 @@ const AddStreamerForm = ({ closeDialog }: { closeDialog: () => void }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+  const { createStreamer } = useStreamerStore();
 
   const onSubmit = async (data: z.infer<typeof schema>) => {
     console.log("Submitting form with data:", data);

@@ -1,35 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import StreamerCard from "../components/StreamerCard";
-import { type Streamer, fetchStreamers } from "~/services/requests";
+import { useStreamerStore } from "~/services/store";
 
 const StreamerList = () => {
-  const [streamers, setStreamers] = useState<Streamer[]>();
+  const { fetchStreamers, streamerArr } = useStreamerStore();
 
   useEffect(() => {
-    const fetchStreamerData = async () => {
-      setStreamers([]);
-      try {
-        const streamers = await fetchStreamers();
-        setStreamers(streamers);
-      } catch (error) {
-        console.error("Error fetching streamer data:", error);
-      }
-    };
+    void fetchStreamers();
+  }, [fetchStreamers])
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fetchStreamerData();
-  }, []);
-
-  if (!streamers) {
-    return <div>Loading...</div>;
-  }
+  const arr = streamerArr();
 
   return (
     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-8">
-      {streamers.length
-        ? streamers.map((item) => (
-            <StreamerCard key={item._id} streamer={item} />
-          ))
+      {arr.length
+        ? arr.map((item) => <StreamerCard key={item._id} streamer={item} />)
         : "none"}
     </div>
   );

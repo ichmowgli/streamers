@@ -2,7 +2,7 @@ import React, { type FC } from "react";
 import { BsTwitch, BsYoutube } from "react-icons/bs";
 import { RiKickLine } from "react-icons/ri";
 import { BiLogoTiktok } from "react-icons/bi";
-import { type Platform } from "~/services/requests";
+import { type Platform } from "~/services/store";
 
 export const RumbleIcon = ({
   fill = "grayscale",

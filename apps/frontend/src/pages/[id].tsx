@@ -1,32 +1,32 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { type NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import LikeDislike from "~/components/LikeDislike";
 import PlatformIcon from "~/components/PlatformIcon";
+import { useStreamerStore } from "~/services/store";
 
-import { fetchStreamer, type Streamer } from "~/services/requests";
-
-const streamerPage: NextPage = () => {
+const StreamerPage: NextPage = () => {
   const { query } = useRouter();
   const streamerId = query.id as string;
 
-  const [streamer, setStreamer] = useState<Streamer | null>(null);
+  const { streamers, fetchStreamer } = useStreamerStore();
 
-  useEffect(() => {
-    if (streamerId) {
-      void fetchStreamer(streamerId).then((data) => setStreamer(data));
-    }
-  }, [streamerId]);
+  if (!streamerId) {
+    return <p>loading...</p>;
+  }
+
+  if (!streamers) {
+    void fetchStreamer(streamerId);
+    return <p>loading...</p>;
+  }
+
+  const streamer = streamers.get(streamerId);
 
   if (!streamer) {
-    return <p>loading...</p>;
+    return <p>Failed to find streamer...</p>;
   }
 
   return (
@@ -60,7 +60,11 @@ const streamerPage: NextPage = () => {
                   </div>
                   <p className="">{streamer.description}</p>
                 </div>
-                <LikeDislike id={streamer._id} like={streamer.like} dislike={streamer.dislike} />
+                <LikeDislike
+                  id={streamer._id}
+                  like={streamer.like}
+                  dislike={streamer.dislike}
+                />
               </div>
             </div>
           </div>
@@ -70,4 +74,4 @@ const streamerPage: NextPage = () => {
   );
 };
 
-export default streamerPage;
+export default StreamerPage;

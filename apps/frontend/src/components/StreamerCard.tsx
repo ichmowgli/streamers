@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { type Streamer } from "~/services/requests";
+import { type Streamer } from "~/services/store";
 import LikeDislike from "./LikeDislike";
 import PlatformIcon from "./PlatformIcon";
 import Link from "next/link";
