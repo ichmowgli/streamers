@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 
 import { type NextPage } from "next";
@@ -12,7 +13,10 @@ const StreamerPage: NextPage = () => {
   const { query } = useRouter();
   const streamerId = query.id as string;
 
-  const { streamers, fetchStreamer } = useStreamerStore();
+  const { streamers, fetchStreamer, connectToWs } =
+    useStreamerStore();
+
+  connectToWs();
 
   if (!streamerId) {
     return <p>loading...</p>;

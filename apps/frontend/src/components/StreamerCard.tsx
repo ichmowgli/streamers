@@ -22,8 +22,7 @@ const StreamerCard = ({ streamer }: { streamer: Streamer }) => {
         {/* TODO: refer to platform link (example: https://{platform.link}/streamer.name) */}
         <a className="flex flex-row gap-2 text-[#8578E6]">
           {platforms.map((platform) => (
-            // eslint-disable-next-line react/jsx-key
-            <PlatformIcon platform={platform} />
+            <PlatformIcon key={`${streamer._id}.platform.${platform}`} platform={platform} />
           ))}
         </a>
         <LikeDislike like={like} dislike={dislike} id={streamer._id} />

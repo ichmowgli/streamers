@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import { type Socket } from "socket.io-client";
 import { create } from "zustand";
+import SocketIOClient from "socket.io-client";
 
 export enum Platform {
   TWITCH = "TWITCH",
@@ -72,6 +74,8 @@ type Store = {
   streamerArr: () => Streamer[];
   reactions: { liked: Set<string>; disliked: Set<string> };
 
+  addToStore: (streamer: Streamer) => void;
+
   fetchStreamers: () => Promise<void>;
   fetchStreamer: (id: string) => Promise<Streamer>;
   placeVote: (id: string, direction: "UP" | "DOWN") => Promise<Streamer>;
@@ -80,6 +84,10 @@ type Store = {
     description: string;
     platforms: Platform[];
   }) => Promise<Streamer>;
+
+  ws: Socket | null;
+  connectToWs: () => void;
+  disconnectFromWs: () => void;
 };
 
 export const useStreamerStore = create<Store>((set, get) => ({
@@ -143,5 +151,37 @@ export const useStreamerStore = create<Store>((set, get) => ({
 
     set({ streamers });
     return data;
+  },
+  addToStore: (streamer) => {
+    const streamers = get().streamers || new Map();
+    streamers.set(streamer._id, streamer);
+    set({ streamers });
+  },
+
+  ws: null,
+  connectToWs: () => {
+    if (get().ws) return;
+
+    const io = SocketIOClient("ws://localhost:3002", {
+      upgrade: true,
+    });
+
+    const socket = io.connect();
+
+    socket.on("events", (e) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+      get().addToStore(e.data);
+    });
+
+    set({ ws: io });
+  },
+  disconnectFromWs: () => {
+    const ws = get().ws;
+
+    if (!ws) return;
+
+    ws.disconnect();
+
+    set({ ws: null });
   },
 }));

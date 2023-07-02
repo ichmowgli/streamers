@@ -3,6 +3,7 @@ import { StreamersService } from './streamers.service';
 import { StreamersController } from './streamers.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Streamer, StreamerSchema } from './schemas/streamer.schema';
+import { EventsGateway } from 'src/gateways/events.gateway';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { Streamer, StreamerSchema } from './schemas/streamer.schema';
     ]),
   ],
   controllers: [StreamersController],
-  providers: [StreamersService],
+  providers: [StreamersService, EventsGateway],
 })
 export class StreamersModule {}

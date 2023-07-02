@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { WsAdapter } from '@nestjs/platform-ws';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cors = require('cors');
 
@@ -12,6 +14,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.useWebSocketAdapter(new IoAdapter(app));
   await app.listen(3001);
 }
 bootstrap();
